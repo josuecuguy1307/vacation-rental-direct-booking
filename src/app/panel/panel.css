@@ -1,0 +1,287 @@
+/* ============================================================
+   Panel de la dueña — mobile-first (ella lo usa desde el celular).
+   4 puertas (Inicio · Reservas · Caja · Ajustes) con barra inferior
+   fija; botones grandes (≥48px), inputs a 16px (sin zoom iOS).
+   Prefijo .pn para no chocar con el sitio público. Serif Marcellus
+   (ya cargada por el layout global) en los títulos, como la casa.
+   ============================================================ */
+
+.pn {
+  --pv: #2e4636;        /* verde */
+  --pv-dark: #22352a;
+  --pc: #f4efe4;        /* crema claro */
+  --pink: #2c2620;      /* texto (espresso) */
+  --psoft: #6b6052;
+  --pborde: #e2d9c8;
+  --pok: #2e7d4f;
+  --pbad: #b3402e;
+  --pwarn: #9a6b1f;
+  --pserif: 'Marcellus', Georgia, serif;
+  min-height: 100dvh;
+  background: #faf7f0;
+  color: var(--pink);
+  font-family: ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.45;
+}
+.pn *, .pn *::before, .pn *::after { box-sizing: border-box; }
+
+/* ── login ── */
+.pn-login {
+  min-height: 100dvh; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; padding: 24px; gap: 6px;
+  background: linear-gradient(170deg, var(--pv-dark), var(--pv));
+}
+.pn-login img { width: 130px; margin-bottom: 10px; }
+.pn-login h1 { color: var(--pc); font-family: var(--pserif); font-size: 1.5rem; font-weight: 400; margin: 0 0 18px; }
+.pn-login form { width: 100%; max-width: 360px; display: grid; gap: 12px; }
+.pn-login input {
+  width: 100%; padding: 14px; border-radius: 12px; border: none;
+  font-size: 16px; background: #fffdf8;
+}
+.pn-login button {
+  padding: 15px; border: none; border-radius: 12px; font-size: 16px;
+  font-weight: 700; background: var(--pc); color: var(--pv-dark); cursor: pointer;
+}
+.pn-login button:disabled { opacity: .6; }
+.pn-login .pn-err { color: #ffd9cf; text-align: center; font-size: .92rem; min-height: 1.3em; }
+
+/* ── shell: header ── */
+.pn-top {
+  position: sticky; top: 0; z-index: 30; background: var(--pv-dark);
+  color: var(--pc); display: flex; align-items: center; gap: 10px;
+  padding: 10px 14px;
+}
+.pn-top img { width: 86px; display: block; }
+.pn-top .pn-who { margin-left: auto; font-size: .78rem; opacity: .85; text-align: right; }
+.pn-top button {
+  background: none; border: 1px solid rgba(244,239,228,.4); color: var(--pc);
+  border-radius: 8px; padding: 6px 10px; font-size: .8rem; cursor: pointer;
+}
+
+/* ── shell: barra inferior fija (4 puertas) ── */
+.pn-bottomnav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  background: var(--pv-dark); border-top: 1px solid rgba(244,239,228,.12);
+  padding: 4px 4px calc(4px + env(safe-area-inset-bottom));
+}
+.pn-bottomnav button {
+  position: relative;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: 2px; border: none; background: none; cursor: pointer;
+  color: rgba(244,239,228,.62); padding: 7px 2px; border-radius: 12px;
+  font-size: .68rem; font-weight: 600; min-height: 52px;
+}
+.pn-bottomnav button .ico { font-size: 1.28rem; line-height: 1; }
+.pn-bottomnav button.on { color: var(--pc); background: rgba(244,239,228,.12); }
+.pn-bottomnav button .badge {
+  position: absolute; top: 5px; left: 50%; margin-left: 4px;
+  min-width: 17px; padding: 0 4px; border-radius: 999px;
+  background: var(--pbad); color: #fff; font-size: .66rem; line-height: 17px; font-weight: 700;
+}
+
+/* ── main ── */
+.pn-main { padding: 14px 14px 96px; max-width: 760px; margin: 0 auto; }
+.pn-main h2 { font-family: var(--pserif); font-weight: 400; font-size: 1.5rem; margin: 4px 0 14px; letter-spacing: .01em; }
+.pn-main h3 { font-family: var(--pserif); font-weight: 400; font-size: 1.18rem; margin: 0 0 8px; }
+.pn-back {
+  display: inline-flex; align-items: center; gap: 5px; background: none; border: none;
+  color: var(--psoft); font: inherit; font-size: .9rem; cursor: pointer; padding: 6px 0; margin-bottom: 2px;
+}
+
+/* ── sub-navegación (pestañas internas: Reservas, Ajustes) ── */
+.pn-subnav { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.pn-subnav button {
+  flex: 1 1 auto; border: 1px solid var(--pborde); background: #fff; color: var(--pink);
+  border-radius: 999px; padding: 9px 14px; font-size: .9rem; font-weight: 600; cursor: pointer;
+  min-height: 42px;
+}
+.pn-subnav button.on { background: var(--pv); color: var(--pc); border-color: var(--pv); }
+
+/* ── menú de Ajustes (filas con chevron) ── */
+.pn-menu-row {
+  display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+  background: #fff; border: 1px solid var(--pborde); border-radius: 14px;
+  padding: 14px; margin-bottom: 10px; cursor: pointer; font: inherit; color: inherit;
+}
+.pn-menu-row:active { background: #f6f1e6; }
+.pn-menu-row .ico { font-size: 1.4rem; line-height: 1; }
+.pn-menu-row .tx { flex: 1; }
+.pn-menu-row .tx b { display: block; font-size: 1rem; }
+.pn-menu-row .tx span { color: var(--psoft); font-size: .84rem; }
+.pn-menu-row .chev { color: var(--psoft); font-size: 1.2rem; }
+
+/* ── tarjetas y utilidades ── */
+.pn-card {
+  background: #fff; border: 1px solid var(--pborde); border-radius: 14px;
+  padding: 14px; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(44,38,32,.05);
+}
+.pn-card.urgent { border: 2px solid var(--pwarn); background: #fffaf0; }
+.pn-muted { color: var(--psoft); font-size: .88rem; }
+.pn-row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.pn-kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+.pn-kpi { background: #fff; border: 1px solid var(--pborde); border-radius: 14px; padding: 12px; }
+.pn-kpi b { display: block; font-family: var(--pserif); font-weight: 400; font-size: 1.7rem; }
+.pn-kpi span { font-size: .8rem; color: var(--psoft); }
+
+/* pulso del mes (Inicio) — línea calma, no 4 KPIs compitiendo */
+.pn-pulse { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pn-pulse button, .pn-pulse .cell {
+  text-align: left; background: #fff; border: 1px solid var(--pborde); border-radius: 14px;
+  padding: 12px; font: inherit; color: inherit;
+}
+.pn-pulse button { cursor: pointer; }
+.pn-pulse b { display: block; font-family: var(--pserif); font-weight: 400; font-size: 1.7rem; }
+.pn-pulse span { font-size: .8rem; color: var(--psoft); }
+.pn-nudge {
+  display: flex; align-items: center; justify-content: space-between; width: 100%;
+  background: #fff; border: 1px solid var(--pborde); border-radius: 14px; padding: 13px 14px;
+  margin-top: 10px; font: inherit; color: inherit; cursor: pointer; font-weight: 600;
+}
+.pn-nudge .arrow { color: var(--psoft); }
+
+.pn-badge {
+  display: inline-block; padding: 3px 9px; border-radius: 999px;
+  font-size: .75rem; font-weight: 700;
+}
+.pn-badge.ok { background: #e2f2e7; color: var(--pok); }
+.pn-badge.warn { background: #fdf2dd; color: var(--pwarn); }
+.pn-badge.bad { background: #fbe5e0; color: var(--pbad); }
+.pn-badge.info { background: #e8e8f5; color: #44447c; }
+
+/* ── botones ── */
+.pn button.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 6px;
+  min-height: 48px; padding: 10px 18px; border-radius: 12px; border: none;
+  font-size: 1rem; font-weight: 700; cursor: pointer;
+}
+.pn button.btn.sm { min-height: 38px; padding: 6px 13px; font-size: .88rem; }
+.pn button.btn.ok { background: var(--pok); color: #fff; }
+.pn button.btn.bad { background: #fff; color: var(--pbad); border: 2px solid var(--pbad); }
+.pn button.btn.plain { background: #efe9dc; color: var(--pink); }
+.pn button.btn.dark { background: var(--pv); color: var(--pc); }
+.pn button.btn:disabled { opacity: .55; cursor: default; }
+.pn .btn-fill { width: 100%; }
+
+/* ── formularios ── */
+.pn label.f { display: block; margin-bottom: 10px; font-size: .85rem; color: var(--psoft); }
+.pn label.f > span { display: block; margin-bottom: 4px; font-weight: 600; }
+.pn input[type="text"], .pn input[type="email"], .pn input[type="password"],
+.pn input[type="number"], .pn input[type="date"], .pn input[type="time"],
+.pn select, .pn textarea {
+  width: 100%; padding: 11px 12px; border: 1px solid var(--pborde);
+  border-radius: 10px; font-size: 16px; background: #fffdf8; color: var(--pink);
+}
+.pn textarea { min-height: 130px; font-family: inherit; line-height: 1.5; }
+.pn .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+/* fila on/off (Notificaciones): checkbox grande + etiqueta con descripción */
+.pn-toggle {
+  display: flex; align-items: flex-start; gap: 10px; padding: 11px 0;
+  border-bottom: 1px solid var(--pborde); cursor: pointer;
+}
+.pn-toggle:last-of-type { border-bottom: none; }
+.pn-toggle input { width: 22px; height: 22px; margin-top: 1px; flex: 0 0 auto; accent-color: var(--pv); }
+.pn-toggle .tx b { display: block; font-size: .95rem; }
+.pn-toggle .tx span { color: var(--psoft); font-size: .82rem; }
+
+/* ── comprobante embebido ── */
+.pn-proof {
+  display: block; width: 100%; max-height: 420px; object-fit: contain;
+  border-radius: 10px; border: 1px solid var(--pborde); background: #f3f0e9;
+  margin: 10px 0;
+}
+.pn-proof-pdf { width: 100%; height: 420px; border: 1px solid var(--pborde); border-radius: 10px; margin: 10px 0; }
+
+/* ── listas ── */
+.pn-item {
+  display: block; width: 100%; text-align: left; background: #fff;
+  border: 1px solid var(--pborde); border-radius: 12px; padding: 12px;
+  margin-bottom: 8px; cursor: pointer; font: inherit; color: inherit;
+}
+.pn-item:active { background: #f6f1e6; }
+.pn table { width: 100%; border-collapse: collapse; font-size: .86rem; }
+.pn table th, .pn table td { text-align: left; padding: 7px 6px; border-bottom: 1px solid var(--pborde); }
+.pn table th { color: var(--psoft); font-weight: 600; }
+
+/* ── chips de variables ── */
+.pn-vars { display: flex; flex-wrap: wrap; gap: 6px; margin: 8px 0; }
+.pn-vars code {
+  background: #efe9dc; border-radius: 7px; padding: 3px 8px; font-size: .78rem; cursor: pointer;
+}
+/* chip de variable arrastrable: {var} + su valor de ejemplo */
+.pn-var-chip {
+  display: inline-flex; align-items: center; gap: 6px; max-width: 100%;
+  background: #efe9dc; border: 1px solid var(--pborde); border-radius: 9px;
+  padding: 5px 9px; cursor: grab; font: inherit; color: inherit;
+  touch-action: manipulation;
+}
+.pn-var-chip:active { cursor: grabbing; }
+.pn-var-chip code { background: none; padding: 0; font-size: .78rem; font-weight: 700; }
+.pn-var-chip .ej {
+  font-size: .72rem; color: var(--psoft);
+  max-width: 130px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.pn-var-chip .ej::before { content: "→\00a0"; opacity: .55; }
+/* campo resaltado mientras se arrastra una variable (dónde soltar) */
+.pn .pn-droppable { outline: 2px dashed var(--pv); outline-offset: 2px; }
+.pn-preview {
+  background: #fffdf8; border: 1px dashed var(--pborde); border-radius: 10px;
+  padding: 12px; font-size: .9rem; white-space: pre-wrap; margin-top: 10px;
+}
+
+.pn-msg { padding: 10px 12px; border-radius: 10px; margin: 10px 0; font-size: .9rem; }
+.pn-msg.ok { background: #e2f2e7; color: var(--pok); }
+.pn-msg.bad { background: #fbe5e0; color: var(--pbad); }
+.pn-msg.warn { background: #fdf2dd; color: var(--pwarn); }
+
+@media (min-width: 640px) {
+  .pn-kpis { grid-template-columns: repeat(4, 1fr); }
+  /* en pantalla ancha la barra de puertas sube y se centra */
+  .pn-bottomnav {
+    position: sticky; top: 52px; bottom: auto; grid-template-columns: repeat(4, max-content);
+    justify-content: center; gap: 6px; border-top: none; border-bottom: 1px solid rgba(244,239,228,.12);
+    background: var(--pv);
+  }
+  .pn-bottomnav button { flex-direction: row; gap: 7px; font-size: .9rem; min-height: 44px; padding: 8px 16px; }
+  .pn-bottomnav button .ico { font-size: 1.05rem; }
+  .pn-bottomnav button .badge { position: static; margin: 0 0 0 2px; transform: none; }
+  .pn-main { padding-bottom: 40px; }
+}
+
+/* ── "Editar mi página": aprovechar el ancho ──────────────────
+   Móvil = drill-down (una cosa a la vez). Pantalla ancha = doble
+   panel (lista fija + sección abierta al lado), y el panel entero
+   respira más (760 → 1000px) en vez de una columna angosta. */
+.mp-rail h2 { margin-bottom: 2px; }
+.mp-rail-sub { margin: 0 0 14px; }
+.mp-group-tit {
+  font-family: var(--pserif); font-weight: 400; font-size: .96rem;
+  color: var(--psoft); margin: 16px 0 8px; letter-spacing: .02em;
+}
+.mp-group:first-of-type .mp-group-tit { margin-top: 6px; }
+.pn-menu-row.on {
+  border-color: var(--pv); background: #f1f5f1;
+  box-shadow: inset 3px 0 0 var(--pv);
+}
+.mp-hint { display: flex; align-items: center; min-height: 96px; }
+
+/* móvil / tablet angosta: se ve la lista O la sección, no ambas */
+@media (max-width: 899px) {
+  .mp-shell[data-open="0"] .mp-detail { display: none; }
+  .mp-shell[data-open="1"] .mp-rail { display: none; }
+}
+
+/* pantalla ancha: doble panel + panel entero más ancho */
+@media (min-width: 900px) {
+  .pn-main { max-width: 1000px; }
+  .mp-shell {
+    display: grid; grid-template-columns: 272px minmax(0, 1fr);
+    gap: 24px; align-items: start;
+  }
+  .mp-rail { position: sticky; top: 100px; }
+  .mp-rail .pn-menu-row { margin-bottom: 8px; padding: 12px; }
+  .mp-back { display: none; }
+  .mp-detail h2 { margin-top: 0; }
+}

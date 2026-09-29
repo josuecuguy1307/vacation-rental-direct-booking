@@ -1,0 +1,109 @@
+/* ============================================================
+   Lane 3 — Reservas: calendario de ocupación, timeline del
+   hospedaje, montos desglosados y modal de cancelación.
+   Todo bajo .pn (hereda los tokens del panel). Aislado en su
+   propio archivo para no chocar con panel.css (otras lanes).
+   ============================================================ */
+
+/* ── chips de filtro ── */
+.pn-chips { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 10px; }
+
+/* ── fila "sin confirmar" (discreta) ── */
+.pn-item.pn-item-muted { opacity: .62; border-style: dashed; }
+
+/* ── calendario mensual ── */
+.pn-cal {
+  background: #fff; border: 1px solid var(--pborde); border-radius: 14px;
+  padding: 12px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(44,38,32,.05);
+}
+.pn-cal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+.pn-cal-title {
+  font-family: var(--pserif); font-weight: 400; font-size: 1.15rem;
+  text-transform: capitalize; text-align: center; flex: 1;
+}
+.pn-cal-nav {
+  width: 44px; height: 44px; flex: 0 0 44px; border: 1px solid var(--pborde);
+  background: #fff; color: var(--pv); border-radius: 12px; font-size: 1.5rem;
+  line-height: 1; cursor: pointer;
+}
+.pn-cal-nav:active { background: #f6f1e6; }
+
+.pn-cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 3px; }
+.pn-cal-dow { margin-bottom: 4px; }
+.pn-cal-dowc { text-align: center; font-size: .72rem; font-weight: 700; color: var(--psoft); padding: 2px 0; }
+
+.pn-cal-cell {
+  position: relative; aspect-ratio: 1 / 1; min-height: 40px;
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-start;
+  border-radius: 9px; padding: 3px 0 0 4px; font: inherit; color: var(--pink);
+  border: 1px solid transparent; background: #faf7f0;
+}
+.pn-cal-cell.empty { background: transparent; }
+button.pn-cal-cell { cursor: pointer; }
+.pn-cal-num { font-size: .82rem; font-weight: 600; line-height: 1; }
+.pn-cal-cell.occ { border-color: transparent; }
+.pn-cal-cell.occ-activa { background: #dff0e6; color: #1e6b40; }
+.pn-cal-cell.occ-activa .pn-cal-num { color: #14532b; }
+.pn-cal-cell.occ-pagada { background: #e8e8f5; color: #44447c; }
+.pn-cal-cell.occ-start { box-shadow: inset 3px 0 0 currentColor; }
+.pn-cal-cell.occ-end { border-top-right-radius: 9px; border-bottom-right-radius: 9px; }
+.pn-cal-cell.hoy { outline: 2px solid var(--pv); outline-offset: -2px; }
+.pn-cal-name {
+  font-size: .6rem; line-height: 1.05; margin-top: 1px; max-width: 100%;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 700;
+}
+.pn-cal-out {
+  position: absolute; top: 4px; right: 4px; width: 6px; height: 6px;
+  border-radius: 50%; background: var(--psoft);
+}
+.pn-cal-legend {
+  display: flex; gap: 14px; flex-wrap: wrap; margin-top: 10px;
+  font-size: .76rem; color: var(--psoft);
+}
+.pn-cal-legend i.dot { display: inline-block; width: 11px; height: 11px; border-radius: 3px; margin-right: 5px; vertical-align: -1px; }
+.pn-cal-legend i.dot.activa { background: #dff0e6; box-shadow: inset 3px 0 0 #1e6b40; }
+.pn-cal-legend i.dot.pagada { background: #e8e8f5; }
+@media (max-width: 380px) { .pn-cal-name { display: none; } }
+
+/* ── montos desglosados ── */
+.pn-desglose { list-style: none; margin: 8px 0; padding: 0; }
+.pn-desglose li { display: flex; justify-content: space-between; padding: 5px 0; font-size: .92rem; }
+.pn-desglose li + li { border-top: 1px solid #f0eadd; }
+.pn-desglose li.total { font-weight: 700; border-top: 2px solid var(--pborde); margin-top: 2px; padding-top: 8px; }
+
+/* ── garantía pendiente: leve realce ── */
+.pn-card.pn-gar-pend { border-color: var(--pwarn); }
+
+/* ── timeline del hospedaje ── */
+.pn-tl { list-style: none; margin: 6px 0 0; padding: 0; }
+.pn-tl-item { position: relative; padding: 0 0 16px 30px; min-height: 34px; }
+.pn-tl-item:not(:last-child)::before {
+  content: ""; position: absolute; left: 10px; top: 20px; bottom: 0;
+  width: 2px; background: var(--pborde);
+}
+.pn-tl-item.done:not(:last-child)::before { background: #bfe0cd; }
+.pn-tl-dot {
+  position: absolute; left: 1px; top: 0; width: 21px; height: 21px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem; font-weight: 800; color: #fff;
+  background: #fff; border: 2px solid var(--pborde); box-sizing: border-box;
+}
+.pn-tl-item.done .pn-tl-dot { background: var(--pok); border-color: var(--pok); }
+.pn-tl-item.now .pn-tl-dot { background: var(--pv); border-color: var(--pv); color: #fff; box-shadow: 0 0 0 4px rgba(46,70,54,.15); }
+.pn-tl-item.todo .pn-tl-dot { background: #fff; }
+.pn-tl-label { font-weight: 600; font-size: .96rem; display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.pn-tl-item.todo .pn-tl-label { color: var(--psoft); }
+.pn-tl-ico { font-size: 1rem; }
+.pn-tl-nowbadge { font-size: .66rem; padding: 1px 7px; }
+.pn-tl-sub { font-size: .82rem; color: var(--psoft); margin-top: 1px; }
+
+/* ── modal (cancelar) ── */
+.pn-modal-back {
+  position: fixed; inset: 0; z-index: 60; background: rgba(30,24,18,.5);
+  display: flex; align-items: center; justify-content: center; padding: 18px;
+}
+.pn-modal {
+  background: #fff; border-radius: 16px; padding: 18px; width: 100%; max-width: 420px;
+  max-height: 90dvh; overflow-y: auto; box-shadow: 0 10px 40px rgba(0,0,0,.25);
+}
+.pn-modal-title { font-family: var(--pserif); font-weight: 400; font-size: 1.3rem; margin: 0 0 8px; }
